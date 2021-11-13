@@ -35,8 +35,24 @@ app.put('/api/workouts/:id',(req,res) => {
     }
   })
 });
-
-
+app.post("/api/workouts", (req,res) => {
+  db.Workout.create(req.body, (err,data) =>{
+    if(err) {
+      res.json(err)
+    } else {
+      res.json(data)
+    }
+  })
+});
+app.get('/api/workouts/range',(req,res) => {
+  db.Workout.find((err,data) => {
+    if(err) {
+      res.json(err)
+    } else {
+      res.json(data)
+    }
+  })
+});
 
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}!`);
