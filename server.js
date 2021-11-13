@@ -17,6 +17,24 @@ app.use(express.static("public"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/populate", { useNewUrlParser: true });
 
+app.get('/api/workouts',(req,res) => {
+  db.Workout.find((err,data) => {
+    if(err) {
+      res.json(err)
+    } else {
+      res.json(data)
+    }
+  })
+});
+app.put('/api/workouts/:id',(req,res) => {
+  db.Workout.updateOne({_id: req.params.id}, {$set: res.body}, (err,data) => {
+    if(err) {
+      res.json(err)
+    } else {
+      res.json(data)
+    }
+  })
+});
 
 
 
