@@ -18,7 +18,7 @@ app.use(express.static("public"));
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/populate", { useNewUrlParser: true });
 
 app.get('/api/workouts',(req,res) => {
-  db.Workout.findOne((err,data) => {
+  db.Workout.findOne({}, {}, { sort: { day : -1 } }, (err,data) => {
     if(err) {
       res.json(err)
     } else {
@@ -27,13 +27,12 @@ app.get('/api/workouts',(req,res) => {
   })
 });
 app.put('/api/workouts/:id',(req,res) => {
-  db.Workout.updateOne({_id: req.params.id}, {$set: res.body}, (err,data) => {
-    if(err) {
-      res.json(err)
-    } else {
-      res.json(data)
-    }
-  })
+  db.Exercise.create(req.body)
+    .then((data) => {
+      db.Workout.findOneAndUpdate({_id:req.params.id},{$push: {exercise: data._id}}, {new:true})
+    })
+    .then(dbWorkout => res.json(dbWorkout))
+    .catch(err=> res.json(err));
 });
 app.post("/api/workouts", (req,res) => {
   db.Workout.create(req.body, (err,data) =>{
