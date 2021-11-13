@@ -44,13 +44,10 @@ app.post("/api/workouts", (req,res) => {
   })
 });
 app.get('/api/workouts/range',(req,res) => {
-  db.Workout.find((err,data) => {
-    if(err) {
-      res.json(err)
-    } else {
-      res.json(data)
-    }
-  })
+  db.Workout.find({})
+    .populate("exercise")
+    .then(data => res.json(data))
+    .catch(err=> res.json(err))
 });
 
 app.listen(PORT, () => {
