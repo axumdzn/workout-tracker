@@ -18,7 +18,7 @@ app.use(express.static("public"));
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/populate", { useNewUrlParser: true });
 
 app.get('/api/workouts',(req,res) => {
-  db.Workout.find((err,data) => {
+  db.Workout.findOne((err,data) => {
     if(err) {
       res.json(err)
     } else {
