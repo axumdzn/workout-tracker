@@ -25,10 +25,11 @@ app.get('/stats', (req,res) => {
   res.sendFile(path.join(__dirname,"public/stats.html"))
 });
 app.get('/api/workouts',(req,res) => {
-  db.Workout.findOne({}, {}, { sort: { day : -1 } }, (err,data) => {
+  db.Workout.findOne({$sort: {day: -1}} ,(err,data) => {
     if(err) {
       res.json(err)
     } else {
+      console.log(data);
       res.json(data)
     }
   })
@@ -37,7 +38,7 @@ app.put('/api/workouts/:id',(req,res) => {
   db.Exercise.create(req.body)
     .then((data) => {
       console.log(data);
-      db.Workout.findByIdAndUpdate(mongoose.Types.ObjectId(req.params.id),{$push: {exercise:data._id}},{new: true})
+      db.Workout.findByIdAndUpdate(mongoose.Types.ObjectId(req.params.id),{$push: {exercises:data._id}},{new: true})
       .then(dbWorkout => {
         console.log(dbWorkout);
         res.json(dbWorkout);

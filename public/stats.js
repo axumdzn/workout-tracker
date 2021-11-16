@@ -1,8 +1,8 @@
 function calculateTotalWeight(data) {
   const totals = [];
-
+  console.log(data);
   data.forEach((workout) => {
-    const workoutTotal = workout.exercise.reduce((total, { type, weight }) => {
+    const workoutTotal = workout.exercises.reduce((total, { type, weight }) => {
       if (type === 'resistance') {
         return total + weight;
       }
@@ -17,9 +17,9 @@ function calculateTotalWeight(data) {
 
 function calculateTotalDuration(data) {
   const totals = [];
-
+  console.log(data);
   data.forEach((workout) => {
-    const workoutTotal = workout.exercise.reduce((total, { type, duration }) => {
+    const workoutTotal = workout.exercises.reduce((total, { type, duration }) => {
       if (type === 'resistance') {
         return total + duration;
       }
