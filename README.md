@@ -8,10 +8,12 @@
 - [License](#license)
 ## Installation
 Install and start with node or nodemon
+or go to the website https://kenf-wourkout-tracker.herokuapp.com/
 ## Usage
-![homescreen](./public/images/homescreen.png)
-![exercise](./public/images/exercise.png)
-![stats](./public/images/stats.png)
+
+![homescreen](/public/images/homescreen.png)
+![exercise](/public/images/exercise.png)
+![stats](/public/images/stats.png)
 ## License
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) (https://opensource.org/licenses/MIT)
 

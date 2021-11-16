@@ -25,14 +25,9 @@ app.get('/stats', (req,res) => {
   res.sendFile(path.join(__dirname,"public/stats.html"))
 });
 app.get('/api/workouts',(req,res) => {
-  db.Workout.findOne({$sort: {day: -1}} ,(err,data) => {
-    if(err) {
-      res.json(err)
-    } else {
-      console.log(data);
-      res.json(data)
-    }
-  })
+  db.Workout.findOne({$sort: {day: -1}})
+  .populate('exercises').then(data => res.json(data))
+  .catch(err=>res.json(err))
 });
 app.put('/api/workouts/:id',(req,res) => {
   db.Exercise.create(req.body)
