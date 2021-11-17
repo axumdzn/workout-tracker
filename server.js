@@ -2,6 +2,7 @@ const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const path = require('path');
+const apiRoutes = require('./routes')
 
 const PORT = process.env.PORT || 3000;
 
@@ -24,6 +25,8 @@ app.get('/exercise', (req,res) => {
 app.get('/stats', (req,res) => {
   res.sendFile(path.join(__dirname,"public/stats.html"))
 });
+
+app.use('/api',apiRoutes)
 app.get('/api/workouts',(req,res) => {
   db.Workout.findOne({$sort: {day: -1}})
   .populate('exercises').then(data => res.json(data))
