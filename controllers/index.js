@@ -3,4 +3,4 @@ const workoutRoutes = require('./wourkoutRoutes');
 
 router.use('/workouts',workoutRoutes);
 
-module.exports router;
+module.exports = router;
