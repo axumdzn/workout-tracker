@@ -15,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(express.static("public"));
+app.use(apiRoutes)
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
 
@@ -25,7 +26,6 @@ app.get('/stats', (req,res) => {
   res.sendFile(path.join(__dirname,"public/stats.html"))
 });
 
-app.use('/api',apiRoutes)
 
 
 app.listen(PORT, () => {

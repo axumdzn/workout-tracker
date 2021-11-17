@@ -5,7 +5,7 @@ async function init() {
     const workout = await API.getLastWorkout();
     console.log((workout));
     if (workout) {
-      location.search = "?id=" + workout._id;
+      location.search = "?id=" + workout[0]._id;
     } else {
       document.querySelector("#continue-btn").classList.add("d-none")
     }

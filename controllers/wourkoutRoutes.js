@@ -1,24 +1,27 @@
-const { db } = require('../models/Workout');
 
-const router = require('express').Router();
-db = require('../models/Workout')
+const express = require('express')
+const router = express.Router();
+const db = require('../models/Workout')
 
 
 router.get('/',(req,res) => {
-    db.Workout.aggregate([
+    db.aggregate([
       {
         $addFields: {
           totalDuration:{$sum:'$exercises.duration'}
         }
       }
     ])
-    .then(data => res.json(data))
+    .limit(1)
+    .then(data => {
+      console.log(data);
+      res.json(data)})
     .catch(err=>res.json(err))
   });
 
 router.put('/:id',(req,res) => {
 
-        db.Workout.findByIdAndUpdate(mongoose.Types.ObjectId(req.params.id),{$push: {exercises:req.body}},{new: true})
+        db.findByIdAndUpdate(req.params.id,{$push: {exercises:req.body}},{new: true})
         .then(dbWorkout => {
           console.log(dbWorkout);
           res.json(dbWorkout);
@@ -27,7 +30,7 @@ router.put('/:id',(req,res) => {
       });
 
 router.post("/", (req,res) => {
-    db.Workout.create(req.body, (err,data) =>{
+    db.create(req.body, (err,data) =>{
       if(err) {
         res.json(err)
       } else {
@@ -37,8 +40,7 @@ router.post("/", (req,res) => {
   });
 
 router.get('/range',(req,res) => {
-
-    db.Workout.aggregate([
+    db.aggregate([
       {
         $addFields: {
           totalDuration:{$sum:'$exercises.duration'}
@@ -50,3 +52,5 @@ router.get('/range',(req,res) => {
       .then(data => res.json(data))
       .catch(err=> res.json(err))
   });
+
+  module.exports = router;
